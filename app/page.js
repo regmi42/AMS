@@ -1,54 +1,124 @@
 "use client";
 import Link from "next/link";
 import { useAMSContext } from "./Context/store";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Home() {
-  const isLoggedIn = false;
   const { userData, setUserData } = useAMSContext();
   const userRef = useRef();
   const passRef = useRef();
+  const [err, setErr] = useState({ location: "", message: "" });
+  const [role, setRole] = useState("");
+
+  const isLoggedIn = () => {
+    const client = JSON.parse(localStorage.getItem("user"));
+    console.log(client);
+    if (client.role === "admin") {
+      setRole("admin");
+    }
+    if (client.role === "user") {
+      setRole("user");
+    }
+    if (client.role === "artist") {
+      setRole("artist");
+    }
+  };
+  const logOut = () => {
+    localStorage.removeItem("user");
+    setRole("");
+  };
 
   const onLogin = (e) => {
     e.preventDefault();
-    if (
-      (userRef.current.value != null || undefined || "  ") &
-      (passRef.current.value != null || undefined || "  ")
-    ) {
-      console.log("this is start***", userRef.current.value, "***this is end");
-      console.log(userData.admin);
+    if (userRef.current.value === "") {
+      setErr((prev) => ({
+        ...prev,
+        location: "username",
+        message: "Enter Username",
+      }));
+    } else if (passRef.current.value === "") {
+      setErr((prev) => ({
+        ...prev,
+        location: "password",
+        message: "Enter Password",
+      }));
+    } else {
+      const user = userData.map((user) => {
+        console.log(user);
+        if (
+          user.username.toLowerCase() === userRef.current.value.toLowerCase()
+        ) {
+          console.log(user.username);
+
+          if (user.password === passRef.current.value) {
+            console.log(user.password);
+            return user;
+          }
+
+          return setErr((prev) => ({
+            ...prev,
+            location: "username",
+            message: "Invalid Credentials",
+          }));
+        }
+        return setErr((prev) => ({
+          ...prev,
+          location: "username",
+          message: "Invalid Credentials",
+        }));
+      });
+      if (user[0] !== undefined) {
+        const loggedUser = {
+          id: user[0].userId,
+          username: user[0].username,
+          firstname: user[0].firstname,
+          lastname: user[0].lastname,
+          role: user[0].role,
+        };
+        localStorage.setItem("user", JSON.stringify(loggedUser));
+        isLoggedIn();
+      }
     }
   };
 
   return (
     <main className="login-main">
       <h2 className="text-center login-heading">Artist Management System</h2>
-      {isLoggedIn ? (
-        <h1 className="">Redirect to dashboard</h1>
-      ) : (
+      {role === "" && (
         <div className="box mx-auto mt-5">
           <form className="">
             <div className="mb-3">
               <label htmlFor="username" className="form-label ih">
                 UserName
+                <span className="ms-5 text-danger">
+                  {err.location === "username" && err.message}
+                </span>
               </label>
+
               <input
                 type="text"
                 className="form-control"
                 id="username"
                 aria-describedby="emailHelp"
                 ref={userRef}
+                required
+                onChange={() => setErr({ location: "", message: "" })}
               />
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label ih">
                 Password
+                <span className="ms-5 text-danger">
+                  {err.location === "password" && err.message}
+                </span>
               </label>
               <input
                 ref={passRef}
                 type="password"
                 className="form-control"
                 id="password"
+                required
+                onChange={() => setErr({ location: "", message: "" })}
               />
             </div>
 
@@ -61,10 +131,35 @@ export default function Home() {
                 Login
               </button>
               <Link href="/register">
-                <button className="btn btn-success">Register</button>
+                <button className="ms-3 btn btn-success">Register</button>
               </Link>
             </div>
           </form>
+        </div>
+      )}
+
+      {role === "admin" && (
+        <div>
+          <h1 className="">Redirect to Admin dashboard</h1>
+          <button className="btn btn-danger" onClick={() => logOut()}>
+            LogOut
+          </button>
+        </div>
+      )}
+      {role === "artist" && (
+        <div>
+          <h1 className="">Redirect to Artist dashboard</h1>
+          <button className="btn btn-danger" onClick={() => logOut()}>
+            LogOut
+          </button>
+        </div>
+      )}
+      {role === "user" && (
+        <div>
+          <h1 className="">Redirect to User dashboard</h1>
+          <button className="btn btn-danger" onClick={() => logOut()}>
+            LogOut
+          </button>
         </div>
       )}
     </main>

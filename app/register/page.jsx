@@ -39,6 +39,17 @@ export default function Register() {
           />
         </div>
         <div className="mb-3">
+          <label htmlFor="role" className="form-label me-3">
+            Are you an artist?
+          </label>
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id="role"
+            aria-describedby="role"
+          />
+        </div>
+        <div className="mb-3">
           <label htmlFor="password" className="form-label">
             Password
           </label>
@@ -58,6 +69,9 @@ export default function Register() {
         <div className="text-center mt-5">
           <Link href="/register">
             <button className="btn btn-success">Register</button>
+          </Link>
+          <Link href="/">
+            <button className="btn btn-warning ms-5">Go Home</button>
           </Link>
         </div>
       </form>

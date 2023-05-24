@@ -10,12 +10,33 @@ import {
 const AMSContext = createContext({});
 
 export const AMSContextProvider = ({ children }) => {
-  const [userData, setUserData] = useState({
-    admin: { user: "Manish", userId: 0, role: "admin", password: "1234" },
-    user: {},
-    artist: {},
-    songs: {},
-  });
+  const [userData, setUserData] = useState([
+    {
+      userId: 1,
+      username: "bhupesh",
+      role: "user",
+      password: "123",
+      firstname: "Bhupesh",
+      lastname: "Regmi",
+    },
+    {
+      userId: 2,
+      username: "Ram",
+      role: "artist",
+      password: "123",
+      firstname: "Ram",
+      lastname: "Prasad",
+    },
+
+    {
+      userId: 0,
+      username: "Manish",
+      role: "admin",
+      password: "123",
+      firstname: "Manish",
+      lastname: "Regmi",
+    },
+  ]);
 
   return (
     <AMSContext.Provider value={{ userData, setUserData }}>
