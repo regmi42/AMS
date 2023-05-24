@@ -2,11 +2,11 @@ import Link from "next/link";
 
 export default function Register() {
   return (
-    <div className="p-3">
-      <h1>AMS Registration</h1>
+    <div className="p-3 register-main">
+      <h2 className="">AMS Registration</h2>
       <form className="">
         <div className="mb-3">
-          <label for="firstName" className="form-label">
+          <label htmlFor="firstName" className="form-label">
             First Name
           </label>
           <input
@@ -17,7 +17,7 @@ export default function Register() {
           />
         </div>
         <div className="mb-3">
-          <label for="lastName" className="form-label">
+          <label htmlFor="lastName" className="form-label">
             Last Name
           </label>
           <input
@@ -28,7 +28,7 @@ export default function Register() {
           />
         </div>
         <div className="mb-3">
-          <label for="email" className="form-label">
+          <label htmlFor="email" className="form-label">
             Email
           </label>
           <input
@@ -39,13 +39,13 @@ export default function Register() {
           />
         </div>
         <div className="mb-3">
-          <label for="password" className="form-label">
+          <label htmlFor="password" className="form-label">
             Password
           </label>
           <input type="password" className="form-control" id="password" />
         </div>
         <div className="mb-3">
-          <label for="confirmPassword" className="form-label">
+          <label htmlFor="confirmPassword" className="form-label">
             Confirm Password
           </label>
           <input
@@ -56,9 +56,6 @@ export default function Register() {
         </div>
 
         <div className="text-center mt-5">
-          <button type="submit" className="btn btn-primary me-3">
-            Login
-          </button>
           <Link href="/register">
             <button className="btn btn-success">Register</button>
           </Link>
