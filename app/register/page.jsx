@@ -70,7 +70,7 @@ export default function Register() {
           <Link href="./register">
             <button className="btn btn-success">Register</button>
           </Link>
-          <Link href="./">
+          <Link href="./ams/">
             <button className="btn btn-warning ms-5">Go Home</button>
           </Link>
         </div>
