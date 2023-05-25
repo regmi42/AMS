@@ -67,10 +67,10 @@ export default function Register() {
         </div>
 
         <div className="text-center mt-5">
-          <Link href="./register">
+          <Link href="/register">
             <button className="btn btn-success">Register</button>
           </Link>
-          <Link href="./ams/">
+          <Link href="/">
             <button className="btn btn-warning ms-5">Go Home</button>
           </Link>
         </div>
