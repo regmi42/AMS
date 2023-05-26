@@ -1,6 +1,66 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+import { useAMSContext } from "../Context/store";
 
 export default function Register() {
+  const { userData, setUserData } = useAMSContext();
+  const [userDetails, setUserDetails] = useState({
+    firstname: "",
+    lastname: "",
+    username: "",
+    role: false,
+    password: "",
+    confirmpassword: "",
+  });
+
+  const [err, setErr] = useState({ position: "", msg: "" });
+  const { firstname, lastname, username, role, password, confirmpassword } =
+    userDetails;
+  const handleInputChange = (e) => {
+    setUserDetails((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const handleRoleChange = (e) => {
+    setUserDetails((prev) => ({ ...prev, role: e.target.checked }));
+    console.log(e.target.checked);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    if (password !== confirmpassword || password === "") {
+      setErr((prev) => ({
+        ...prev,
+        position: "password",
+        msg: "Password Mismatch",
+      }));
+      return;
+    }
+    const found = userData.find(
+      (user) => user.username.toLowerCase() === username.toLowerCase()
+    );
+    if (found) {
+      setErr((prev) => ({
+        ...prev,
+        position: "username",
+        msg: "User already exists. Pick a different Email.",
+      }));
+      return;
+    }
+    if (role === true) {
+      var sendingRole = "artist";
+    }
+    if (role === false) {
+      var sendingRole = "user";
+    }
+    let id = userData.length;
+    let x = userData;
+    x.push(userDetails);
+    setUserData(x);
+    console.log("EOF");
+  };
+
   return (
     <div className="p-3 register-main">
       <h2 className="">AMS Registration</h2>
@@ -10,6 +70,8 @@ export default function Register() {
             First Name
           </label>
           <input
+            name="firstname"
+            onChange={handleInputChange}
             type="text"
             className="form-control"
             id="firstName"
@@ -21,6 +83,8 @@ export default function Register() {
             Last Name
           </label>
           <input
+            name="lastname"
+            onChange={handleInputChange}
             type="text"
             className="form-control"
             id="lastName"
@@ -32,6 +96,8 @@ export default function Register() {
             Email
           </label>
           <input
+            name="username"
+            onChange={handleInputChange}
             type="email"
             className="form-control"
             id="email"
@@ -43,6 +109,8 @@ export default function Register() {
             Are you an artist?
           </label>
           <input
+            name="role"
+            onChange={handleRoleChange}
             type="checkbox"
             className="form-check-input"
             id="role"
@@ -53,23 +121,37 @@ export default function Register() {
           <label htmlFor="password" className="form-label">
             Password
           </label>
-          <input type="password" className="form-control" id="password" />
+          <input
+            name="password"
+            onChange={handleInputChange}
+            type="password"
+            className="form-control"
+            id="password"
+            autoComplete="off"
+          />
         </div>
         <div className="mb-3">
           <label htmlFor="confirmPassword" className="form-label">
             Confirm Password
           </label>
           <input
+            name="confirmpassword"
+            onChange={handleInputChange}
             type="password"
             className="form-control"
             id="confirmPassword"
+            autoComplete="off"
           />
         </div>
 
         <div className="text-center mt-5">
-          <Link href="/register">
-            <button className="btn btn-success">Register</button>
-          </Link>
+          <button
+            onClick={handleFormSubmit}
+            className="btn btn-success"
+            type="submit"
+          >
+            Register
+          </button>
           <Link href="/">
             <button className="btn btn-warning ms-5">Go Home</button>
           </Link>

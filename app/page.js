@@ -12,7 +12,6 @@ export default function Home() {
 
   const isLoggedIn = () => {
     const client = JSON.parse(localStorage.getItem("user"));
-    console.log(client);
     if (client.role === "admin") {
       setRole("admin");
     }
@@ -43,37 +42,24 @@ export default function Home() {
         message: "Enter Password",
       }));
     } else {
-      const user = userData.map((user) => {
-        console.log(user);
-        if (
-          user.username.toLowerCase() === userRef.current.value.toLowerCase()
-        ) {
-          console.log(user.username);
-
-          if (user.password === passRef.current.value) {
-            console.log(user.password);
-            return user;
-          }
-
-          return setErr((prev) => ({
-            ...prev,
-            location: "username",
-            message: "Invalid Credentials",
-          }));
-        }
+      const user = userData.find(
+        (user) =>
+          user.username.toLowerCase() === userRef.current.value &&
+          user.password === passRef.current.value
+      );
+      if (user === undefined) {
         return setErr((prev) => ({
           ...prev,
           location: "username",
           message: "Invalid Credentials",
         }));
-      });
-      if (user[0] !== undefined) {
+      } else {
         const loggedUser = {
-          id: user[0].userId,
-          username: user[0].username,
-          firstname: user[0].firstname,
-          lastname: user[0].lastname,
-          role: user[0].role,
+          id: user.userId,
+          username: user.username,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          role: user.role,
         };
         localStorage.setItem("user", JSON.stringify(loggedUser));
         isLoggedIn();
@@ -118,6 +104,7 @@ export default function Home() {
                 className="form-control"
                 id="password"
                 required
+                autoComplete="off"
                 onChange={() => setErr({ location: "", message: "" })}
               />
             </div>
