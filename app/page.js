@@ -44,7 +44,7 @@ export default function Home() {
     } else {
       const user = userData.find(
         (user) =>
-          user.username.toLowerCase() === userRef.current.value &&
+          user.username.toLowerCase() === userRef.current.value.toLowerCase() &&
           user.password === passRef.current.value
       );
       if (user === undefined) {
