@@ -9,7 +9,7 @@ if (isGithubActions) {
   const repo = process.env.NEXT_PUBLIC_BASE_PATH;
 
   assetPrefix = `/${repo}/`;
-  basePath = `/${repo}`;
+  basePath = `${repo}`;
 }
 const nextConfig = {
   output: "export",
