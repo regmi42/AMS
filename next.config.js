@@ -6,10 +6,10 @@ let assetPrefix = "";
 let basePath = "";
 
 if (isGithubActions) {
-  const repo = process.env.NEXT_PUBLIC_BASE_PATH;
+  const repo = process.env.NEXT_PUBLIC_BASE_PATH.replace(/.*?\//, "");
 
   assetPrefix = `/${repo}/`;
-  basePath = `${repo}`;
+  basePath = `/${repo}`;
 }
 const nextConfig = {
   output: "export",
