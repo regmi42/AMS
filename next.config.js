@@ -1,20 +1,20 @@
 /** @type {import('next').NextConfig} */
 
-const isGithubActions = process.env.IS_GITHUB_ACTIONS || false;
+const isGithubActions = process.env.NEXT_PUBLIC_GITHUB_ACTIONS || false;
 
 let assetPrefix = "";
 let basePath = "";
 
 if (isGithubActions) {
-  const repo = process.env.REPOSITORY.replace(/.*?\//, "");
+  const repo = process.env.NEXT_PUBLIC_BASE_PATH.replace(/.*?\//, "");
 
   assetPrefix = `/${repo}/`;
   basePath = `/${repo}`;
 }
 const nextConfig = {
   output: "export",
-  assetPrefix: "/ams",
-  basePath: "/ams",
+  assetPrefix: assetPrefix,
+  basePath: basePath,
 };
 
 module.exports = nextConfig;

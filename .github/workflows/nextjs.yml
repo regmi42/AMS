@@ -75,8 +75,14 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        env:
+          NEXT_PUBLIC_BASE_PATH: /ams
+          NEXT_PUBLIC_GITHUB_ACTIONS: true
       - name: Static HTML export with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next export
+        env:
+          NEXT_PUBLIC_BASE_PATH: /ams
+          NEXT_PUBLIC_GITHUB_ACTIONS: true
       - name: Include _next folders
         run: touch ./out/.nojekyll
       - name: Upload artifact
