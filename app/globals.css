@@ -30,6 +30,18 @@
   margin-inline: auto;
 }
 
+/* Admin Dashboard */
+.tab {
+  padding: 5px 15px;
+  border: none;
+  border-bottom: 2px solid black;
+}
+.tab-active {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+  border-bottom: 2px solid black !important;
+}
+
 /* Mobile */
 @media only screen and (max-width: 600px) {
   .bg {

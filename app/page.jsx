@@ -121,6 +121,30 @@ export default function Home() {
           </div>
         </form>
       </div>
+      <div className="text-center mt-3">
+        <p>
+          Please use following username. Password is <strong>123</strong> for
+          all user
+        </p>
+        <p>
+          For Admin:
+          <span>
+            <strong>Manish</strong>
+          </span>
+        </p>
+        <p>
+          For User:{" "}
+          <span>
+            <strong>Bhupesh</strong>
+          </span>
+        </p>
+        <p>
+          For Artist:{" "}
+          <span>
+            <strong>Ram</strong>
+          </span>
+        </p>
+      </div>
     </main>
   );
 }
